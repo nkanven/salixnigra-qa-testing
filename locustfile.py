@@ -13,7 +13,7 @@ class SalixNigra(HttpUser):
         self.client.get("")
         self.client.get("trading/")
 
-    @task(2)
+    @task
     def dashboard(self):
         self.client.get("dashboard/")
         self.client.get("dashboard/detailed-summary")
@@ -22,7 +22,7 @@ class SalixNigra(HttpUser):
 
     def on_start(self):
         self.client.post("user/login/",
-                         json={"email": os.environ.get("environ"), "password": os.environ.get("password")})
+                         json={"email": os.getenv("email"), "password": os.getenv("password")})
 
     def on_stop(self):
         self.client.get("user/logout")
